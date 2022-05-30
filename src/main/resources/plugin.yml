@@ -1,0 +1,4 @@
+name: Switchplugin
+version: '${project.version}'
+main: me.switched.switchplugin.Switchplugin
+api-version: 1.18
