@@ -14,6 +14,8 @@ out/
 # Log file
 *.log
 
+Assets.java
+
 # BlueJ files
 *.ctxt
 

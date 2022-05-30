@@ -1,5 +1,6 @@
 package me.switched.switchplugin.Command;
 
+import me.switched.switchplugin.Assets;
 import me.switched.switchplugin.DiscordWebhook;
 import me.switched.switchplugin.Switchplugin;
 
@@ -13,7 +14,7 @@ public class OnlineCommand extends Command{
     @Override
     public void execute() {
         super.execute();
-        DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/980938964066246676/8h-HmChBbYcSnps2oCv65YXwbwy5PugLkaGcdEyPFJttARIqxAGzvPVKtQBJztX0rybb");
+        DiscordWebhook webhook = new DiscordWebhook(Assets.MC_WEBHOOK);
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                 .setTitle(String.format("Players online: %s", Switchplugin.PLUGIN.getOnlinePlayers().size())));
         try {
