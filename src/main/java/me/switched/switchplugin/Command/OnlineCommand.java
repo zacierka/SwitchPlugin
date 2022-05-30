@@ -20,7 +20,7 @@ public class OnlineCommand extends Command{
         try {
             webhook.execute();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Switchplugin.LOGGER.warning("CHECK DISCORD WEBHOOK URL");
         }
     }
 }
