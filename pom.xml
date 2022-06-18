@@ -6,7 +6,7 @@
 
     <groupId>me.switched</groupId>
     <artifactId>switchplugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>Switchplugin</name>
@@ -75,5 +75,12 @@
             <artifactId>amqp-client</artifactId>
             <version>5.14.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+
     </dependencies>
 </project>

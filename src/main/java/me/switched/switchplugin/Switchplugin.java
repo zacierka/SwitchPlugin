@@ -4,11 +4,15 @@ import com.rabbitmq.client.*;
 import me.switched.switchplugin.Command.Command;
 import me.switched.switchplugin.Command.CommandHandler;
 import me.switched.switchplugin.Command.OnlineCommand;
+import me.switched.switchplugin.Database.DataSourceBroker;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
@@ -19,7 +23,10 @@ public final class Switchplugin extends JavaPlugin {
     private Channel channel = null;
     private String MC_QUEUE = "MC_QUEUE";
 
+    private java.sql.Connection conn = null;
     private CommandHandler commandHandler;
+
+    private DataSourceBroker db = null;
     @Override
     public void onEnable() {
 
@@ -27,9 +34,16 @@ public final class Switchplugin extends JavaPlugin {
         PLUGIN = this.getServer();
         this.commandHandler = new CommandHandler();
         commandHandler.addCommand(new OnlineCommand());
+
+        db = new DataSourceBroker();
+        db.setStatusData("ONLINE", getServer().getMinecraftVersion(), getServer().getMotd(), "vanilla");
         // Plugin startup logic
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("192.168.1.12");
+        factory.setUsername("bot");
+        factory.setPassword("Switched");
+        factory.setPort(5672);
+
         Connection connection = null;
         try {
             connection = factory.newConnection();
@@ -48,7 +62,7 @@ public final class Switchplugin extends JavaPlugin {
 
                 String message = new String(body, StandardCharsets.UTF_8);
 
-                LOGGER.info("Got Message: "+message);
+                LOGGER.info("Received Message: "+message);
                 commandHandler.run(message);
             }
         };
@@ -61,7 +75,13 @@ public final class Switchplugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        db.setStatusData("OFFLINE", getServer().getMinecraftVersion(), getServer().getMotd(), "vanilla");
+        try {
+            channel.close();
+            db.close();
+        } catch (IOException | TimeoutException e) {
+            throw new RuntimeException(e);
+        }
         // Plugin shutdown logic
     }
 }
