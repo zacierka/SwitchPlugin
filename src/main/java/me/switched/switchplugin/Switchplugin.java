@@ -39,10 +39,10 @@ public final class Switchplugin extends JavaPlugin {
         db.setStatusData("ONLINE", getServer().getMinecraftVersion(), getServer().getMotd(), "vanilla");
         // Plugin startup logic
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("192.168.1.12");
-        factory.setUsername("bot");
-        factory.setPassword("Switched");
-        factory.setPort(5672);
+        factory.setHost(Assets.AMPQ_URL);
+        factory.setUsername(Assets.AMPQ_USER);
+        factory.setPassword(Assets.AMPQ_PASS);
+        factory.setPort(Assets.AMPQ_PORT);
 
         Connection connection = null;
         try {
